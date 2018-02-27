@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8"/>
-  <title>チケット管理</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-<div class="container">
-  <h1>チケット管理</h1>
+<?= $this->fetch('header.phtml') ?>
   <div class="card">
     <div class="card-body">
       <h2 class="card-title">チケット一覧</h2>
@@ -21,6 +12,4 @@
       </div>
     </div>
   </div>
-</div>
-</body>
-</html>
+<?= $this->fetch('footer.phtml') ?>
