@@ -12,6 +12,7 @@
     <div class="card-body">
       <h2 class="card-title">チケット一覧</h2>
       <div class="card-text">
+        <a href="/tickets/create">新規作成</a>
         <ul class="list-group">
             <?php foreach ($tickets as $ticket): ?>
               <li class="list-group-item"><a href="/tickets/<?= $ticket['id'] ?>"><?= e($ticket['subject']) ?></a></li>
