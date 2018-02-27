@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <title>チケット管理</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <div class="container">
+    <h1>チケット管理</h1>
+    <form method="POST" action="/tickets">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">チケット作成</h2>
+          <div class="card-text">
+            <div class="form-group">
+              <label for="subject">件名</label>
+              <input type="text" name="subject" id="subject" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <button class="btn btn-primary">作成</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
