@@ -16,6 +16,13 @@
             <td><?= e($ticket['subject']) ?></td>
           </tr>
           </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="2">
+              <a href="/tickets/<?= e($ticket['id']) ?>/edit" class="btn btn-primary">編集</a>
+            </td>
+          </tr>
+          </tfoot>
         </table>
       </div>
     </div>

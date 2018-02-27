@@ -71,6 +71,23 @@ $app->get('/tickets/{id}/edit', function (Request $request, Response $response, 
 
 // 更新
 $app->put('/tickets/{id}', function (Request $request, Response $response, array $args) {
+    $sql = 'SELECT * FROM tickets WHERE id = :id';
+    $stmt = $this->db->prepare($sql);
+    $result = $stmt->execute(['id' => $args['id']]);
+    if (!$result) {
+        throw new \Exception('could not find the ticket');
+    }
+    $ticket = $stmt->fetch();
+    if (!$ticket) {
+        return $response->withStatus(404)->write('not found');
+    }
+    $ticket['subject'] = $request->getParsedBodyParam('subject');
+    $stmt = $this->db->prepare('UPDATE tickets SET subject = :subject WHERE id = :id');
+    $result = $stmt->execute($ticket);
+    if (!$result) {
+        throw new \Exception('could not save the ticket');
+    }
+    return $response->withRedirect("/tickets");
 });
 
 // 削除
