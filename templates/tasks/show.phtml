@@ -20,10 +20,33 @@
           <tr>
             <td colspan="2">
               <a href="/tickets/<?= e($ticket['id']) ?>/edit" class="btn btn-primary">編集</a>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">削除</button>
             </td>
           </tr>
           </tfoot>
         </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">チケットの削除</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>本当に削除してよろしいですか？</p>
+        </div>
+        <form method="post" action="/tickets/<?= e($ticket['id']) ?>">
+          <input type="hidden" name="_METHOD" value="delete">
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-danger">削除</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

@@ -92,6 +92,22 @@ $app->put('/tickets/{id}', function (Request $request, Response $response, array
 
 // 削除
 $app->delete('/tickets/{id}', function (Request $request, Response $response, array $args) {
+    $sql = 'SELECT * FROM tickets WHERE id = :id';
+    $stmt = $this->db->prepare($sql);
+    $result = $stmt->execute(['id' => $args['id']]);
+    if (!$result) {
+        throw new \Exception('could not find the ticket');
+    }
+    $ticket = $stmt->fetch();
+    if (!$ticket) {
+        return $response->withStatus(404)->write('not found');
+    }
+    $stmt = $this->db->prepare('DELETE FROM tickets WHERE id = :id');
+    $result = $stmt->execute(['id' => $ticket['id']]);
+    if (!$result) {
+        throw new \Exception('could not delete the ticket');
+    }
+    return $response->withRedirect("/tickets");
 });
 
 $app->get('/[{name}]', function (Request $request, Response $response, array $args) {
