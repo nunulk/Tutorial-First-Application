@@ -1,0 +1,19 @@
+<?= $this->fetch('header.phtml') ?>
+<form method="POST" action="/tickets/<?= e($ticket['id']) ?>">
+  <input type="hidden" name="_METHOD" value="put">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">チケット編集</h2>
+      <div class="card-text">
+        <div class="form-group">
+          <label for="subject">件名</label>
+          <input type="text" name="subject" id="subject" class="form-control" value="<?= e($ticket['subject']) ?>">
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <button class="btn btn-primary">更新</button>
+    </div>
+  </div>
+</form>
+<?= $this->fetch('footer.phtml') ?>
