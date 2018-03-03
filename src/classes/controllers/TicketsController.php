@@ -41,14 +41,9 @@ class TicketsController extends Controller
 
     public function show(Request $request, Response $response, array $args)
     {
-        $sql = 'SELECT * FROM tickets WHERE id = :id';
-        $stmt = $this->db->prepare($sql);
-        $result = $stmt->execute(['id' => $args['id']]);
-        if (!$result) {
-            throw new \Exception('could not find the ticket');
-        }
-        $ticket = $stmt->fetch();
-        if (!$ticket) {
+        try {
+            $ticket = $this->fetchTicket($args['id']);
+        } catch (\Exception $e) {
             return $response->withStatus(404)->write('not found');
         }
         $data = ['ticket' => $ticket];
@@ -57,14 +52,9 @@ class TicketsController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $sql = 'SELECT * FROM tickets WHERE id = :id';
-        $stmt = $this->db->prepare($sql);
-        $result = $stmt->execute(['id' => $args['id']]);
-        if (!$result) {
-            throw new \Exception('could not find the ticket');
-        }
-        $ticket = $stmt->fetch();
-        if (!$ticket) {
+        try {
+            $ticket = $this->fetchTicket($args['id']);
+        } catch (\Exception $e) {
             return $response->withStatus(404)->write('not found');
         }
         $data = ['ticket' => $ticket];
@@ -73,14 +63,9 @@ class TicketsController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $sql = 'SELECT * FROM tickets WHERE id = :id';
-        $stmt = $this->db->prepare($sql);
-        $result = $stmt->execute(['id' => $args['id']]);
-        if (!$result) {
-            throw new \Exception('could not find the ticket');
-        }
-        $ticket = $stmt->fetch();
-        if (!$ticket) {
+        try {
+            $ticket = $this->fetchTicket($args['id']);
+        } catch (\Exception $e) {
             return $response->withStatus(404)->write('not found');
         }
         $ticket['subject'] = $request->getParsedBodyParam('subject');
@@ -94,14 +79,9 @@ class TicketsController extends Controller
 
     public function delete(Request $request, Response $response, array $args)
     {
-        $sql = 'SELECT * FROM tickets WHERE id = :id';
-        $stmt = $this->db->prepare($sql);
-        $result = $stmt->execute(['id' => $args['id']]);
-        if (!$result) {
-            throw new \Exception('could not find the ticket');
-        }
-        $ticket = $stmt->fetch();
-        if (!$ticket) {
+        try {
+            $ticket = $this->fetchTicket($args['id']);
+        } catch (\Exception $e) {
             return $response->withStatus(404)->write('not found');
         }
         $stmt = $this->db->prepare('DELETE FROM tickets WHERE id = :id');
@@ -110,5 +90,17 @@ class TicketsController extends Controller
             throw new \Exception('could not delete the ticket');
         }
         return $response->withRedirect("/tickets");
+    }
+
+    private function fetchTicket(int $id): array
+    {
+        $sql = 'SELECT * FROM tickets WHERE id = :id';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $ticket = $stmt->fetch();
+        if (!$ticket) {
+            throw new \Exception('not found');
+        }
+        return $ticket;
     }
 }
