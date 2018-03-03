@@ -30,10 +30,7 @@ class TicketsController extends Controller
         // ここに保存の処理を書く
         $sql = 'INSERT INTO tickets (subject) values (:subject)';
         $stmt = $this->db->prepare($sql);
-        $result = $stmt->execute(['subject' => $subject]);
-        if (!$result) {
-            throw new \Exception('could not save the ticket');
-        }
+        $stmt->execute(['subject' => $subject]);
 
         // 保存が正常にできたら一覧ページへリダイレクトする
         return $response->withRedirect("/tickets");
@@ -70,10 +67,7 @@ class TicketsController extends Controller
         }
         $ticket['subject'] = $request->getParsedBodyParam('subject');
         $stmt = $this->db->prepare('UPDATE tickets SET subject = :subject WHERE id = :id');
-        $result = $stmt->execute($ticket);
-        if (!$result) {
-            throw new \Exception('could not save the ticket');
-        }
+        $stmt->execute($ticket);
         return $response->withRedirect("/tickets");
     }
 
@@ -85,10 +79,7 @@ class TicketsController extends Controller
             return $response->withStatus(404)->write('not found');
         }
         $stmt = $this->db->prepare('DELETE FROM tickets WHERE id = :id');
-        $result = $stmt->execute(['id' => $ticket['id']]);
-        if (!$result) {
-            throw new \Exception('could not delete the ticket');
-        }
+        $stmt->execute(['id' => $ticket['id']]);
         return $response->withRedirect("/tickets");
     }
 
