@@ -28,10 +28,7 @@ $app->post('/tickets', function (Request $request, Response $response) {
     // ここに保存の処理を書く
     $sql = 'INSERT INTO tickets (subject) values (:subject)';
     $stmt = $this->db->prepare($sql);
-    $result = $stmt->execute(['subject' => $subject]);
-    if (!$result) {
-        throw new \Exception('could not save the ticket');
-    }
+    $stmt->execute(['subject' => $subject]);
 
     // 保存が正常にできたら一覧ページへリダイレクトする
     return $response->withRedirect("/tickets");
@@ -41,10 +38,7 @@ $app->post('/tickets', function (Request $request, Response $response) {
 $app->get('/tickets/{id}', function (Request $request, Response $response, array $args) {
     $sql = 'SELECT * FROM tickets WHERE id = :id';
     $stmt = $this->db->prepare($sql);
-    $result = $stmt->execute(['id' => $args['id']]);
-    if (!$result) {
-        throw new \Exception('could not find the ticket');
-    }
+    $stmt->execute(['id' => $args['id']]);
     $ticket = $stmt->fetch();
     if (!$ticket) {
         return $response->withStatus(404)->write('not found');
