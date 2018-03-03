@@ -51,10 +51,7 @@ $app->get('/tickets/{id}', function (Request $request, Response $response, array
 $app->get('/tickets/{id}/edit', function (Request $request, Response $response, array $args) {
     $sql = 'SELECT * FROM tickets WHERE id = :id';
     $stmt = $this->db->prepare($sql);
-    $result = $stmt->execute(['id' => $args['id']]);
-    if (!$result) {
-        throw new \Exception('could not find the ticket');
-    }
+    $stmt->execute(['id' => $args['id']]);
     $ticket = $stmt->fetch();
     if (!$ticket) {
         return $response->withStatus(404)->write('not found');
