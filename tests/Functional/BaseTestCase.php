@@ -2,6 +2,7 @@
 
 namespace Tests\Functional;
 
+use Psr\Container\ContainerInterface;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -16,11 +17,38 @@ use Slim\Http\Environment;
 class BaseTestCase extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @var App
+     */
+    private $app;
+
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
      * Use middleware when running application?
      *
      * @var bool
      */
     protected $withMiddleware = true;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        // Use the application settings
+        $settings = require __DIR__ . '/../../src/settings.php';
+
+        // Instantiate the application
+        $app = new App($settings);
+
+        // Set up dependencies
+        require __DIR__ . '/../../src/dependencies.php';
+
+        $this->app = $app;
+        $this->container = $this->app->getContainer();
+    }
 
     /**
      * Process the application given a request method and URI
@@ -32,6 +60,8 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
      */
     public function runApp($requestMethod, $requestUri, $requestData = null)
     {
+        $app = $this->app;
+
         // Create a mock environment for testing with
         $environment = Environment::mock(
             [
@@ -50,15 +80,6 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
 
         // Set up a response object
         $response = new Response();
-
-        // Use the application settings
-        $settings = require __DIR__ . '/../../src/settings.php';
-
-        // Instantiate the application
-        $app = new App($settings);
-
-        // Set up dependencies
-        require __DIR__ . '/../../src/dependencies.php';
 
         // Register middleware
         if ($this->withMiddleware) {
