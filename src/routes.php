@@ -14,12 +14,12 @@ $app->get('/tickets', function (Request $request, Response $response) {
         $tickets[] = $row;
     }
     $data = ['tickets' => $tickets];
-    return $this->renderer->render($response, 'tasks/index.phtml', $data);
+    return $this->renderer->render($response, 'tickets/index.phtml', $data);
 });
 
 // 新規作成用フォームの表示
 $app->get('/tickets/create', function (Request $request, Response $response) {
-    return $this->renderer->render($response, 'tasks/create.phtml');
+    return $this->renderer->render($response, 'tickets/create.phtml');
 });
 
 // 新規作成
@@ -44,7 +44,7 @@ $app->get('/tickets/{id}', function (Request $request, Response $response, array
         return $response->withStatus(404)->write('not found');
     }
     $data = ['ticket' => $ticket];
-    return $this->renderer->render($response, 'tasks/show.phtml', $data);
+    return $this->renderer->render($response, 'tickets/show.phtml', $data);
 });
 
 // 編集用フォームの表示
