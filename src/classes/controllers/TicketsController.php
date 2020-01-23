@@ -16,12 +16,12 @@ class TicketsController extends Controller
             $tickets[] = $row;
         }
         $data = ['tickets' => $tickets];
-        return $this->renderer->render($response, 'tasks/index.phtml', $data);
+        return $this->renderer->render($response, 'tickets/index.phtml', $data);
     }
 
     public function create(Request $request, Response $response)
     {
-        return $this->renderer->render($response, 'tasks/create.phtml');
+        return $this->renderer->render($response, 'tickets/create.phtml');
     }
 
     public function store(Request $request, Response $response)
@@ -44,7 +44,7 @@ class TicketsController extends Controller
             return $response->withStatus(404)->write('not found');
         }
         $data = ['ticket' => $ticket];
-        return $this->renderer->render($response, 'tasks/show.phtml', $data);
+        return $this->renderer->render($response, 'tickets/show.phtml', $data);
     }
 
     public function edit(Request $request, Response $response, array $args)
@@ -55,7 +55,7 @@ class TicketsController extends Controller
             return $response->withStatus(404)->write('not found');
         }
         $data = ['ticket' => $ticket];
-        return $this->renderer->render($response, 'tasks/edit.phtml', $data);
+        return $this->renderer->render($response, 'tickets/edit.phtml', $data);
     }
 
     public function update(Request $request, Response $response, array $args)
