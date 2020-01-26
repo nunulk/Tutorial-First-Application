@@ -22,7 +22,7 @@ $app->get('/tickets/{id}', TicketsController::class . ':show');
 $app->get('/tickets/{id}/edit', TicketsController::class . ':edit');
 
 // 更新
-$app->put('/tickets/{id}', TicketsController::class . ':update');
+$app->patch('/tickets/{id}', TicketsController::class . ':update');
 
 // 削除
 $app->delete('/tickets/{id}', TicketsController::class . ':delete');
