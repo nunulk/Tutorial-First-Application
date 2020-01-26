@@ -61,7 +61,7 @@ $app->get('/tickets/{id}/edit', function (Request $request, Response $response, 
 });
 
 // 更新
-$app->put('/tickets/{id}', function (Request $request, Response $response, array $args) {
+$app->patch('/tickets/{id}', function (Request $request, Response $response, array $args) {
     $sql = 'SELECT * FROM tickets WHERE id = :id';
     $stmt = $this->db->prepare($sql);
     $stmt->execute(['id' => $args['id']]);
