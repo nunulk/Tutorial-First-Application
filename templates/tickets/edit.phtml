@@ -1,6 +1,6 @@
 <?= $this->fetch('header.phtml') ?>
 <form method="POST" action="/tickets/<?= e($ticket['id']) ?>">
-  <input type="hidden" name="_METHOD" value="put">
+  <input type="hidden" name="_METHOD" value="patch">
   <div class="card">
     <div class="card-body">
       <h2 class="card-title">チケット編集</h2>
