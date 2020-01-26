@@ -74,7 +74,7 @@ class TicketsTest extends BaseTestCase
         $this->container['db']->query("INSERT INTO tickets (subject) VALUES ('テストチケット')");
         $id = $this->container['db']->lastInsertId();
 
-        $response = $this->runApp('PUT', '/tickets/' . $id, ['subject' => 'テストチケット（変更）']);
+        $response = $this->runApp('PATCH', '/tickets/' . $id, ['subject' => 'テストチケット（変更）']);
 
         $stmt = $this->container['db']->query('SELECT * FROM tickets WHERE id = ' . $id);
         $ticket = $stmt->fetch();
